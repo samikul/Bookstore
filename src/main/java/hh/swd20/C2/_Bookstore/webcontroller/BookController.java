@@ -15,31 +15,30 @@ import hh.swd20.C2._Bookstore.domain.BookRepository;
 
 @Controller
 public class BookController {
-	
+
 	// Spring-alusta luo sovelluksen käynnistyessä BookRepository-rajapintaa toteuttavan
 	// luokan olion BookController-luokasta luodun olion attribuuttiolioksi
 	@Autowired
 	BookRepository bookRepository; 
-	
+
 	/* 
 	 * 
-	 * findAll()
 	 * LISTAA KIRJAT
 	 * 
 	 * */
 	@RequestMapping(value = "/allbooks", method = RequestMethod.GET)
 	public String getAllBooks(Model model) {
-		
+
 		// haetaan tietokannasta kirjat listaan
 		List<Book> books = (List<Book>) bookRepository.findAll();
-		
+
 		// laitetaan model-mappiin kirjalista templatea varten
 		model.addAttribute("books", books);
-		
+
 		// palautetaan template booklist.html
 		return "booklist";
 	}
-	
+
 	/*
 	 * 
 	 * TYHJÄN KIRJALOMAKKEEN MUODOSTAMINEN
@@ -47,34 +46,32 @@ public class BookController {
 	 * */
 	@RequestMapping(value = "/newbook", method = RequestMethod.GET)
 	public String getNewBookForm(Model model) {
-		
+
 		// luodaan tyhjä kirja-olio
 		model.addAttribute("book", new Book());
-		
+
 		// palautetaan template bookform.html
 		return "bookform";
 	}
-	
+
 	/*
 	 * 
-	 * save()
-	 * TALLENNA UUSI KIRJA
+	 * LISÄÄ KIRJA
 	 * 
 	 * */
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveBook(@ModelAttribute Book book) {
-		
+
 		// talletetaan yhden kirjan tiedot tietokantaan
 		// save() osaa tehdä tarpeen mukaan sql insertin tai updaten riippuen tilanteesta
 		bookRepository.save(book);
-		
+
 		// kutsutaan allbooks-endpointtia
 		return "redirect:/allbooks";
 	}
-	
+
 	/*
 	 * 
-	 * deleteById()
 	 * POISTA KIRJA
 	 * 
 	 * */
@@ -83,5 +80,16 @@ public class BookController {
 		bookRepository.deleteById(bookId);
 		return "redirect:/allbooks";
 	}
-	
+
+	/*
+	 * 
+	 * MUOKKAA KIRJAA
+	 * 
+	 * */
+	@RequestMapping(value = "/editbook/{id}")
+	public String editBook(@PathVariable("id") Long bookId, Model model) {
+		model.addAttribute("book", bookRepository.findById(bookId));
+
+		return "bookedit";
+	}
 }

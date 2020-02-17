@@ -6,7 +6,7 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 	// CrudRepository-rajapinnan parametrisoinnissa annetaan Entity-luokan nimi: tässä Book
 	// ja toisena parametrina pääavainsarakkeen luokkatietotyyppi: tässä Long
 	
-	// BookRepository periytyy (extends) CrudRepositorysta ja perii mm metodiesittelyt
+	// BookRepository periytyy (extends) CrudRepositorysta ja perii mm. metodiesittelyt
 	// findAll(), findById(), save(), deleteById()
 	
 }
