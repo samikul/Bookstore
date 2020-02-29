@@ -12,25 +12,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import hh.swd20.C2._Bookstore.domain.Book;
 import hh.swd20.C2._Bookstore.domain.BookRepository;
+import hh.swd20.C2._Bookstore.domain.CategoryRepository;
 
 @Controller
 public class BookController {
-
-	// Spring-alusta luo sovelluksen käynnistyessä BookRepository-rajapintaa toteuttavan
-	// luokan olion BookController-luokasta luodun olion attribuuttiolioksi
 	@Autowired
-	BookRepository bookRepository; 
+	private BookRepository brepository;
+	
+	@Autowired
+	private CategoryRepository crepository;
 
-	/* 
-	 * 
-	 * LISTAA KIRJAT
-	 * 
-	 * */
+	// Show all books
 	@RequestMapping(value = "/allbooks", method = RequestMethod.GET)
 	public String getAllBooks(Model model) {
 
 		// haetaan tietokannasta kirjat listaan
-		List<Book> books = (List<Book>) bookRepository.findAll();
+		List<Book> books = (List<Book>) brepository.findAll();
 
 		// laitetaan model-mappiin kirjalista templatea varten
 		model.addAttribute("books", books);
@@ -39,11 +36,15 @@ public class BookController {
 		return "booklist";
 	}
 
-	/*
-	 * 
-	 * TYHJÄN KIRJALOMAKKEEN MUODOSTAMINEN
-	 * 
-	 * */
+	// Add new book
+	@RequestMapping(value="/add")
+	public String addBook(Model model) {
+		model.addAttribute("book", new Book());
+		model.addAttribute("categories", crepository.findAll());
+		return "addbook";
+	}
+
+	// Create empty book-form
 	@RequestMapping(value = "/newbook", method = RequestMethod.GET)
 	public String getNewBookForm(Model model) {
 
@@ -54,41 +55,29 @@ public class BookController {
 		return "bookform";
 	}
 
-	/*
-	 * 
-	 * LISÄÄ KIRJA
-	 * 
-	 * */
+	// Save new book
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveBook(@ModelAttribute Book book) {
 
 		// talletetaan yhden kirjan tiedot tietokantaan
 		// save() osaa tehdä tarpeen mukaan sql insertin tai updaten riippuen tilanteesta
-		bookRepository.save(book);
+		brepository.save(book);
 
 		// kutsutaan allbooks-endpointtia
 		return "redirect:/allbooks";
 	}
 
-	/*
-	 * 
-	 * POISTA KIRJA
-	 * 
-	 * */
+	// Delete book
 	@RequestMapping(value = "/deletebook/{id}", method = RequestMethod.GET)
 	public String deleteBook(@PathVariable("id") Long bookId) {
-		bookRepository.deleteById(bookId);
+		brepository.deleteById(bookId);
 		return "redirect:/allbooks";
 	}
 
-	/*
-	 * 
-	 * MUOKKAA KIRJAA
-	 * 
-	 * */
+	// Edit book
 	@RequestMapping(value = "/editbook/{id}")
 	public String editBook(@PathVariable("id") Long bookId, Model model) {
-		model.addAttribute("book", bookRepository.findById(bookId));
+		model.addAttribute("book", brepository.findById(bookId));
 
 		return "bookedit";
 	}

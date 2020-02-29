@@ -1,5 +1,7 @@
 package hh.swd20.C2._Bookstore.domain;
 
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 
 public interface BookRepository extends CrudRepository<Book, Long> {
@@ -9,4 +11,6 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 	// BookRepository periytyy (extends) CrudRepositorysta ja perii mm. metodiesittelyt
 	// findAll(), findById(), save(), deleteById()
 	
+	List<Book> findByTitle(String title);
+
 }
