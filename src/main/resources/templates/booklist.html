@@ -19,8 +19,7 @@
 			<th>Category</th>
 			<th>&nbsp;</th>
 			<th>&nbsp;</th>
-		</tr> 
-
+		</tr>
 		<tr th:each="book : ${books}">
 			<td th:text="${book.id}">id</td>
 			<td th:text="${book.title}">title</td>
@@ -37,8 +36,8 @@
 					class="glyphicon glyphicon-pencil"></span> Edit</a></td>
 		</tr>
 	</table>
-	<a class="btn btn-success btn-sm" href="/newbook"><span
+	<a class="btn btn-success btn-sm" href="/add"><span
 		class="glyphicon glyphicon-plus"></span> New book</a>
-
-	</p>
+	<a class="btn btn-success btn-sm" href="/addcategory"><span
+		class="glyphicon glyphicon-plus"></span> New category</a>
 </body>

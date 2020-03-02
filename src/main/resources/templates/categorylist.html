@@ -23,12 +23,13 @@
 				th:href="@{/deletecategory/{id}(id=${category.categoryid})}"><span
 					class="glyphicon glyphicon-trash"></span> Delete</a></td>
 			<td><a class="btn btn-primary btn-sm"
-				th:href="@{/editcategory/{id}(id=${category.categoryid})}"><span
+				th:href="@{/editcategory/{categoryid}(id=${category.categoryid})}"><span
 					class="glyphicon glyphicon-pencil"></span> Edit</a></td>
 		</tr>
 	</table>
 	<a class="btn btn-success btn-sm" href="/newcategory"><span
-		class="glyphicon glyphicon-plus"></span> New category</a>
+		class="glyphicon glyphicon-plus"></span> Categorylist</a>
+	<a class="btn btn-info btn-sm" href="/allbooks"><span
+		class="glyphicon glyphicon-list"></span> Booklist</a>
 
-	</p>
 </body>

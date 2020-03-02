@@ -2,14 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <title>Add category</title>
 </head>
 <body>
 
 	<div class="container">
 		<h1>Add a new category</h1>
-		<form action="#" th:action="@{/savecategory}" th:object=${category} method="post">
+		<form action="#" th:action="@{/savecategory}" th:object=${category}
+			method="post">
 			<div class="form-group">
 				<label for="Title">Name:</label> <input type="text"
 					th:field="${category.name}" class="form-control"
@@ -18,7 +20,9 @@
 			<input type="submit" value="Submit" class="btn btn-success btn-sm" />
 			<input type="reset" value="Reset" class="btn btn-warning btn-sm" />
 			<a class="btn btn-info btn-sm" href="/allcategories"><span
-		class="glyphicon glyphicon-list"></span> Back</a>
+				class="glyphicon glyphicon-list"></span> Categorylist</a> <a
+				class="btn btn-info btn-sm" href="/allbooks"><span
+				class="glyphicon glyphicon-list"></span> Booklist</a>
 		</form>
 	</div>
 
