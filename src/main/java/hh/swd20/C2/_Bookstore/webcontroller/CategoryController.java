@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -15,7 +14,6 @@ import hh.swd20.C2._Bookstore.domain.CategoryRepository;
 
 @Controller
 public class CategoryController {
-
 	@Autowired
 	private CategoryRepository crepository;
 
@@ -39,19 +37,5 @@ public class CategoryController {
 	public String saveCategory(@ModelAttribute Category category) {
 		crepository.save(category);
 		return "redirect:/allcategories";
-	}
-
-	// Delete category
-	@RequestMapping(value = "/deletecategory/{categoryid}", method = RequestMethod.GET)
-	public String deleteCategory(@PathVariable("categoryid") Long categoryid) {
-		crepository.deleteById(categoryid);
-		return "redirect:/allcategories";
-	}
-
-	// Edit category
-	@RequestMapping(value = "/editcategory/{id}")
-	public String editBook(@PathVariable("categoryid") Long categoryid, Model model) {
-		model.addAttribute("category", crepository.findById(categoryid));
-		return "categoryedit";
 	}
 }
