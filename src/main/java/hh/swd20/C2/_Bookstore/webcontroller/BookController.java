@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -30,7 +31,7 @@ public class BookController {
     }	
 	
 	// Show all books
-	@RequestMapping(value = "/allbooks", method = RequestMethod.GET)
+	@RequestMapping(value = "/booklist", method = RequestMethod.GET)
 	public String getAllBooks(Model model) {
 		List<Book> books = (List<Book>) brepository.findAll();
 		model.addAttribute("books", books);
@@ -49,18 +50,20 @@ public class BookController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveBook(@ModelAttribute Book book) {
 		brepository.save(book);
-		return "redirect:/allbooks";
+		return "redirect:/booklist";
 	}
 
 	// Delete book
 	@RequestMapping(value = "/deletebook/{id}", method = RequestMethod.GET)
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String deleteBook(@PathVariable("id") Long bookId) {
 		brepository.deleteById(bookId);
-		return "redirect:/allbooks";
+		return "redirect:/booklist";
 	}
 
 	// Edit book
 	@RequestMapping(value = "/editbook/{id}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String editBook(@PathVariable("id") Long bookId, Model model) {
 		model.addAttribute("book", brepository.findById(bookId));
 		model.addAttribute("categories", crepository.findAll()); 
